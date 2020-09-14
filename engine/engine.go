@@ -10,7 +10,7 @@ func (engine *engine) AddPlayer(name string) {
 	engine.players = append(engine.players, p)
 }
 
-func (engine *engine) Play()  {
+func (engine *engine) Play() {
 	if len(engine.players) == 0 {
 		fmt.Printf("no players joined.")
 		return
@@ -23,7 +23,7 @@ func (engine *engine) Play()  {
 		newPosition := currentPlayer.Position + roll
 		if newPosition > engine.board.GetEndValue() {
 			fmt.Printf("Player: %s, diceRoll: %d\n", currentPlayer, roll)
-			engine.players = append(engine.players[1:],engine.players[0])
+			engine.players = append(engine.players[1:], engine.players[0])
 			continue
 		}
 
@@ -31,10 +31,10 @@ func (engine *engine) Play()  {
 		fmt.Printf("Player: %s, diceRoll: %d\n", currentPlayer, roll)
 		if currentPlayer.Position == engine.board.GetEndValue() {
 			currentPlayer.Won = true
-			fmt.Printf("%s Won!!!\n",currentPlayer)
+			fmt.Printf("%s Won!!!\n", currentPlayer)
 			engine.players = engine.players[1:]
 		} else {
-			engine.players = append(engine.players[1:],engine.players[0])
+			engine.players = append(engine.players[1:], engine.players[0])
 		}
 
 		if len(engine.players) < 2 {
