@@ -15,8 +15,10 @@ func (engine *engine) Play() {
 		fmt.Printf("no players joined.")
 		return
 	}
-
+	totalNoOfMoves :=0
 	for {
+		totalNoOfMoves++
+
 		currentPlayer := engine.players[0]
 		roll := engine.dice.Roll()
 
@@ -38,7 +40,7 @@ func (engine *engine) Play() {
 		}
 
 		if len(engine.players) < 2 {
-			fmt.Printf("Game finished!!\n")
+			fmt.Printf("Game finished!! total moves: %d\n",totalNoOfMoves)
 			return
 		}
 	}

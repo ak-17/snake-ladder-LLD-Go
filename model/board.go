@@ -6,24 +6,25 @@ import (
 )
 
 type Board struct {
-	startValue int64
-	endValue   int64
+	size       int64
 	snakes     []*snake
 	ladder     []*ladder
 }
 
-func InitBoard(startValue, endValue, noOfSnakes, noOfLadders int64) *Board {
+func InitBoard(size, noOfSnakes, noOfLadders int64) *Board {
 	b := &Board{
-		startValue: startValue,
-		endValue:   endValue,
+		size:       size,
 	}
 
+	// map to store start and end positions of snakes and ladders
+	// so that they dont overlap
 	snakeLadderMap := make(map[string]bool)
+
 	for i := 0; i < int(noOfSnakes); i++ {
 		for {
-			start := rand.Int63n(b.endValue) + 1
-			end := rand.Int63n(b.endValue) + 1
-			if end >= start {
+			start := rand.Int63n(b.size) + 1
+			end := rand.Int63n(b.size) + 1
+			if end >= start || start == size {
 				continue
 			}
 			if _, ok := snakeLadderMap[fmt.Sprintf("%d:%d", start, end)]; !ok {
@@ -36,9 +37,9 @@ func InitBoard(startValue, endValue, noOfSnakes, noOfLadders int64) *Board {
 
 	for i := 0; i < int(noOfLadders); i++ {
 		for {
-			start := rand.Int63n(b.endValue) + 1
-			end := rand.Int63n(b.endValue) + 1
-			if start >= end {
+			start := rand.Int63n(b.size) + 1
+			end := rand.Int63n(b.size) + 1
+			if start >= end || start == 1 {
 				continue
 			}
 			if _, ok := snakeLadderMap[fmt.Sprintf("%d:%d", start, end)]; !ok {
@@ -70,7 +71,7 @@ func (b *Board) isSnake(pos int64) (bool, int64) {
 }
 
 func (b *Board) GetEndValue() int64 {
-	return b.endValue
+	return b.size
 }
 
 func (b *Board) GetNewPosition(pos int64) int64 {

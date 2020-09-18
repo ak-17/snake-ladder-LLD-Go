@@ -1,6 +1,9 @@
 package model
 
-import "math/rand"
+import (
+	"math/rand"
+	"time"
+)
 
 type Dice struct {
 	minValue     int64
@@ -9,6 +12,7 @@ type Dice struct {
 }
 
 func InitDice(maxValue int64) *Dice {
+	rand.Seed(time.Now().UnixNano())
 	return &Dice{
 		minValue:     0,
 		maxValue:     maxValue,
